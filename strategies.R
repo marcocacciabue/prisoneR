@@ -4,7 +4,7 @@
 #
 
 ## Random effective strategy
-randeff <- function(){
+randeff <- function(...){
   val = sample(1:5, 1)
   if(val>3) {
     2}
@@ -16,7 +16,7 @@ randeff <- function(){
 
 ## Random deffective strategy 
 ## Inverts Randeff
-randdeff <- function(){
+randdeff <- function(...){
   (tirada = randeff())
   if (tirada == 1)
   {2}
@@ -26,21 +26,21 @@ randdeff <- function(){
 
 
 ## Random basic strategy
-randbasic <- function(){
+randbasic <- function(...){
   sample(1:2,1)
 }
 
 
 
 ## Always deffective strategy
-alwdeff <- function(){
+alwdeff <- function(...){
   2
 }
 
 
 ## Always funtional strategy
 
-alwfunc <- function(){
+alwfunc <- function(...){
   1
 }
 
@@ -48,7 +48,7 @@ alwfunc <- function(){
 
 ## Particle counter strategy
 
-count_def <- function(score,k){
+count_def <- function(score,k,...){
   
   if (score >= k*0.5) {
     2

@@ -8,14 +8,15 @@ library(deSolve)
 #####################################################################
 
 ##Defino 'game' que integra todos los elementos seleccionados durante 'main' para que el programa realicé las interacciones##
-game <- function(    funGrowth,
-                     play1,
-                     play2,
-                     population1,
-                     population2,
-                     generations,
-                     interaction,
-                     parameters){
+game <- function(    funGrowth, #strategy of player 1
+                     play1, #strategy of player 1
+                     play2, #strategy of player 2
+                     population1, #proportion of population1
+                     population2, #proportion of population2
+                     generations, #number of generations
+                     interaction, # interaction function
+                     parameters #list of parameters to pass to ode solver
+                     ){
   
   with(as.list(c(funGrowth,
                  play1,
@@ -55,7 +56,7 @@ game <- function(    funGrowth,
                    
 
                    # TODO  
-                   #'* IMPORTANT!  * 
+                   #'* IMPORTANT * 
                    # decide what form of parameters we will pass to the 
                    # strategy function in order to make it the more general and flexible
                    # as possible.
@@ -158,10 +159,10 @@ parametros <- list(k1 = 1, # population 1 carrying capacity
 
 stgr1<-check_strategy("Count_defective")
 stgr2<-check_strategy("Count_defective")
-
-simulation <- game(funGrowth=LotkaVolt, #Growth function to pass to ode solver
-                           play1=alwdeff, #strategy of player 1
-                           play2=alwdeff, #strategy of player 2
+set.seed(20)
+simulation <- game(        funGrowth=LotkaVolt, #Growth function to pass to ode solver
+                           play1=randdeff, #strategy of player 1
+                           play2=randdeff, #strategy of player 2
                            interaction=interaction_dynamic, # interaction function
                            generations= 480, #number of generations
                            population1= 0.1, #proportion of population1
@@ -171,5 +172,5 @@ simulation <- game(funGrowth=LotkaVolt, #Growth function to pass to ode solver
 
 
 
-head(simulation_lv4)
+head(simulation)
 
