@@ -8,7 +8,7 @@ library(deSolve)
 #####################################################################
 
 ##Defino 'game' que integra todos los elementos seleccionados durante 'main' para que el programa realicé las interacciones##
-game <- function(funGrowth,
+game <- function(    funGrowth,
                      play1,
                      play2,
                      population1,
@@ -49,11 +49,7 @@ game <- function(funGrowth,
                    
                    p1Score <- population1
                    p2Score <- population2
-                   
-                   
-                   # TODO
-                   # ask difference of p3Score here vs in may function
-                   p3Score <- 0#population1/population2
+                   p3Score <- 0
                    p4Score <- 1
                    p5Score <- (population1/population2)
                    
