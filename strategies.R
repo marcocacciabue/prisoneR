@@ -32,13 +32,13 @@ randbasic <- function(...){
 
 
 
-## Always deffective strategy
+## Always defective strategy
 alwdeff <- function(...){
   2
 }
 
 
-## Always funtional strategy
+## Always functional strategy
 
 alwfunc <- function(...){
   1
@@ -71,7 +71,7 @@ check_strategy<-function(strategy='Alwaysfunctional'){
     play <- randbasic
   }
   if (strategy== 'Randomeffective') {
-    play
+    play <- randeff
   }
   if (strategy == 'Randomdefectiveinterfering') {
     play <- randdeff

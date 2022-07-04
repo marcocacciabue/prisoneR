@@ -7,7 +7,28 @@ library(deSolve)
 #####           Definimos la funcion de Lotka-volterra          #####
 #####################################################################
 
-##Defino 'game' que integra todos los elementos seleccionados durante 'main' para que el programa realicé las interacciones##
+#' game simulation
+#' 
+#' `game()` returns a data.frame with the Fst values for the simulated
+#' interactions between defective and helper viral particles.
+#'
+#' @param funGrowth 
+#' @param play1 
+#' @param play2 
+#' @param population1 
+#' @param population2 
+#' @param generations 
+#' @param interaction 
+#' @param parameters 
+#'
+#' @return A data frame with the obtained scores. The output has the following columns:
+#' * 
+#'   
+#' 
+#' 
+#' @export
+#'
+#' @examples
 game <- function(    funGrowth, #strategy of player 1
                      play1, #strategy of player 1
                      play2, #strategy of player 2
