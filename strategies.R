@@ -48,13 +48,16 @@ alwfunc <- function(...){
 
 ## Particle counter strategy
 
-count_def <- function(score,k,...){
-  
+count_def <- function(prev,score,k,...){
+  with(as.list(c(prev,
+                 score,
+                 k)),{  
   if (score >= k*0.5) {
     2
   }else {
     1
   }
+                 })
 }
 
 # this function is optional, the user can pass directly the strategy

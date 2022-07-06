@@ -29,7 +29,7 @@ library(deSolve)
 #' @export
 #'
 #' @examples
-game <- function(    funGrowth, #strategy of player 1
+game <- function(    funGrowth, #growth function
                      play1, #strategy of player 1
                      play2, #strategy of player 2
                      population1, #proportion of population1
@@ -59,13 +59,6 @@ game <- function(    funGrowth, #strategy of player 1
                    # with unknown parameters the user would include?)
                    # set a maximum number possible?
                    
-                   
-                   
-                   
-                   
-                   # TODO
-                   #ask if population here is the same as frequency in may
-                   
                    ## initial values of the two populations that
                    ## compose deserters (need help) and helpers (not deserters) 
                    
@@ -76,19 +69,15 @@ game <- function(    funGrowth, #strategy of player 1
                    p5Score <- (population1/population2)
                    
 
-                   # TODO  
-                   #'* IMPORTANT * 
-                   # decide what form of parameters we will pass to the 
-                   # strategy function in order to make it the more general and flexible
-                   # as possible.
-                   # passing all parameters is a viable option??
-                   # the same goes to growth function
                    
- 
-
-                   ##Cinética de las interacciones quien mueve primero y quien despues##
-                   p1Move <- play1(p1Score, k1)
-                   p2Move <- play2(p2Score, k2)
+                   # establish first interaction according to the strategy of each player
+                   # prev=NULL because this is the first interaction. If strategy is dependent 
+                   # on the previous interaction the corresponding function should deal 
+                   # correctly with the first value)
+                   
+                   p1Move <- play1(prev=NULL,score=p1Score,k=k1)
+                   p2Move <- play2(prev=NULL,score=p2Score,k=k2)
+                   
                    
                    #Genero los vectores que guardaran los valores de cada ciclo
                    xn1 <- p1Score
@@ -102,26 +91,24 @@ game <- function(    funGrowth, #strategy of player 1
                    for (i in 1:generations) {
                      
                      # change parameter according to the interaction inthis generation
-                     parameters<-interaction_dynamic(p1Move,
-                                                     p2Move,
-                                                     parameters)  
-                     #  Compute population dynamics for this parameters
-                     state <- c(x1 = as.numeric(p1Score), x2 = as.numeric(p2Score))
-                     tiempos <- seq(0, 1, by = 1) # sequence for the passage of time
-                     out <- deSolve::ode(func = funGrowth, y = state, times = tiempos, parms = parameters)
+                     parameters<-interaction(p1Move,
+                                             p2Move,
+                                             parameters)  
+                     
+                     out<-funGrowth(p1Score,p2Score,parameters)
                      
                      #  change parameters for the next generation
-                     p1Score <- out[2,2]
-                     p2Score <- out[2,3]
-                     p3Score <- out[2,2]/out[2,3]
-                     p4Score <- ((out[2,2]/out[2,3])/(population1/population2))
-                     p5Score <- (Total_fst[length(Total_fst)]/(out[2,2]/out[2,3]))
+                     p1Score <- out[1]
+                     p2Score <- out[2]
+                     p3Score <- out[1]/out[2]
+                     p4Score <- ((out[1]/out[2])/(population1/population2))
+                     p5Score <- (Total_fst[length(Total_fst)]/(out[1]/out[2]))
                      
                      #Vuelvo a calcular los move para el siguiente ciclo
                      prevP1Move <- p1Move
                      prevP2Move <- p2Move
-                     p1Move <- play1(prevP1Move,p1Score,k1 )
-                     p2Move <- play2(prevP2Move, p2Score,k2)
+                     p1Move <- play1(prev=prevP1Move,score=p1Score,k=k1)
+                     p2Move <- play2(prev=prevP2Move,score=p2Score,k=k2)
                      
                      #Guardo el valor del ciclo
                      xn1 <- append(x = xn1, values = p1Score)
@@ -168,7 +155,9 @@ parametros <- list(k1 = 1, # population 1 carrying capacity
                    r1_2_2=0.8,
                    r2_2_2=-0.8,
                    a12_2_2=-0.1,
-                   a21_2_2=-0.1
+                   a21_2_2=-0.1,
+                   H1=NULL,
+                   H2=NULL
 ) 
 
 
@@ -181,17 +170,25 @@ parametros <- list(k1 = 1, # population 1 carrying capacity
 stgr1<-check_strategy("Count_defective")
 stgr2<-check_strategy("Count_defective")
 set.seed(20)
-simulation <- game(        funGrowth=LotkaVolt, #Growth function to pass to ode solver
-                           play1=randdeff, #strategy of player 1
+simulationLV <- game(        funGrowth=LV_general, #Growth function to pass to ode solver
+                           play1=count_def, #strategy of player 1
                            play2=randdeff, #strategy of player 2
-                           interaction=interaction_dynamic, # interaction function
+                           interaction=interaction_dynamic_LV, # interaction function
                            generations= 480, #number of generations
-                           population1= 0.1, #proportion of population1
+                           population1= 0.2, #proportion of population1
                            population2= 0.1, #proportion of population2
                            parameters=parametros #list of parameters to pass to ode solver
 ) 
 
+simulationMAY <- game(        funGrowth=MAY_general, #Growth function to pass to ode solver
+                             play1=count_def, #strategy of player 1
+                             play2=count_def, #strategy of player 2
+                             interaction=interaction_dynamic_MAY, # interaction function
+                             generations= 480, #number of generations
+                             population1= 0.2, #proportion of population1
+                             population2= 0.1, #proportion of population2
+                             parameters=parametros #list of parameters to pass to ode solver
+) 
 
 
-head(simulation)
-
+head(simulationMAY)
