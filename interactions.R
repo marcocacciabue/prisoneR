@@ -3,6 +3,7 @@
 interaction_dynamic_MAY<-function(p1Move,
                               p2Move,
                               parameters){
+  
   with(as.list(c(p1Move,
                  p2Move,
                  parameters)),{
@@ -13,7 +14,6 @@ interaction_dynamic_MAY<-function(p1Move,
                      parameters$H2 <- 0.50
                      parameters$r1 <- r1_1_1
                      parameters$r2 <- r2_1_1
-                     
                    }
                    
                    

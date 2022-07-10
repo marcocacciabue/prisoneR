@@ -32,21 +32,58 @@ library(deSolve)
 game <- function(    funGrowth, #growth function
                      play1, #strategy of player 1
                      play2, #strategy of player 2
-                     population1, #proportion of population1
-                     population2, #proportion of population2
-                     generations, #number of generations
                      interaction, # interaction function
+                     population1 = 0.1, #proportion of population1
+                     population2 = 0.1, #proportion of population2
+                     generations = 50, #number of generations
                      parameters #list of parameters to pass to ode solver
                      ){
   
+
+  #check if functions are given
+  if(is.null(funGrowth)|!is.function(funGrowth))
+  stop("'funGrowth' should be given as a function.You can try preloaded LV or MAY accordingly")
+
+  print(names(funGrowth))
+  
+
+  
+  
+  if(is.null(play1)|!is.function(play1))
+      stop("'play1' should be given as a function")
+   
+  if(is.null(play2)|!is.function(play2))
+      stop("'play2' should be given as a function")
+  
+  if(is.null(interaction)|!is.function(interaction))
+      stop("'interaction' should be given as a function.You can try preloaded interaction_dynamic_MAY or interaction_dynamic_LV accordingly")
+  
+                
+  #check if relevant integers are given  
+  if((!is.numeric(population1))|(population1>0.99)|(population1<0.01))
+    stop("'population1' should be given as an numeric of values between 0.01 and 0.99")
+ 
+  if((!is.numeric(population2))|(population2>0.99)|(population2<0.01))
+    stop("'population2' should be given as an numeric of values between 0.01 and 0.99")
+  
+  if((!generations == round(generations))|(generations>1000)|(generations<2))
+    stop("'generations' should be given as an interger of values between 2 and 1000")
+  
+  #check if parameters is a list
+
+  if(!is.list(parameters)) stop("'parameters' should be given as a list of values")
+  
+  
+  funGrowth_args<-as.list(args(interaction))
+  # print(as.list(environment(), all=TRUE))
   with(as.list(c(funGrowth,
                  play1,
                  play2,
                  population1,
                  population2,
                  generations,
-                 parameters)),{  
-                   
+                 parameters)),{    
+
                    # TODO
                    # add check step to control that funGrowth`s parameters
                    # are included in parameters
@@ -90,7 +127,7 @@ game <- function(    funGrowth, #growth function
                    ##Se define el número de veces que se repiten las interacciones##
                    for (i in 1:generations) {
                      
-                     # change parameter according to the interaction inthis generation
+                     # change parameter according to the interaction in this generation
                      parameters<-interaction(p1Move,
                                              p2Move,
                                              parameters)  
@@ -170,17 +207,19 @@ parametros <- list(k1 = 1, # population 1 carrying capacity
 stgr1<-check_strategy("Count_defective")
 stgr2<-check_strategy("Count_defective")
 set.seed(20)
-simulationLV <- game(        funGrowth=LV_general, #Growth function to pass to ode solver
+L<-"a"
+simulationLV <- game(      funGrowth="LV", #Growth function to pass to ode solver
                            play1=count_def, #strategy of player 1
                            play2=randdeff, #strategy of player 2
                            interaction=interaction_dynamic_LV, # interaction function
                            generations= 480, #number of generations
-                           population1= 0.2, #proportion of population1
+                           population1= 0.11, #proportion of population1
                            population2= 0.1, #proportion of population2
                            parameters=parametros #list of parameters to pass to ode solver
 ) 
 
-simulationMAY <- game(        funGrowth=MAY_general, #Growth function to pass to ode solver
+
+simulationMAY <- game(       funGrowth=MAY, #Growth function to pass to ode solver
                              play1=count_def, #strategy of player 1
                              play2=count_def, #strategy of player 2
                              interaction=interaction_dynamic_MAY, # interaction function
@@ -190,5 +229,26 @@ simulationMAY <- game(        funGrowth=MAY_general, #Growth function to pass to
                              parameters=parametros #list of parameters to pass to ode solver
 ) 
 
+as.character(LV)
 
 head(simulationMAY)
+
+try(LV(p1Score=1,p2Score=3,as.list(parametros))
+    )
+
+environment(simulationLV)
+trace(.last_env)
+ls()
+.last_env
+base::eval(MAY)
+interaction_dynamic_MAY()
+print(as.list(environment(), all=TRUE))
+
+attr(LV,"function")
+
+eval(substitute(LV),parametros) 
+  objeto 'a21_2_2' no encontrado 
+  
+  deSolve::ode
+assign
+#> y <- x * 10

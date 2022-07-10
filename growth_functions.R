@@ -5,7 +5,7 @@
 
 
 
-LV_general<-function(p1Score,p2Score,parameters){
+LV<-function(p1Score,p2Score,parameters){
   
   LotkaVolt <- function(t, state, parameters){
     with(as.list(c(state, parameters)),{
@@ -33,12 +33,12 @@ LV_general<-function(p1Score,p2Score,parameters){
 
 
 
-MAY_general<-function(p1Score,p2Score,parameters){
+MAY<-function(p1Score,p2Score,parameters){
     
   with(as.list(c(p1Score, p2Score,parameters)),{
-    p1Score <- (r1*p1Score*(H1-(p1Score*(genome1**mutation1))))
-    p2Score <- (r2*p2Score*(H2-(p2Score*(genome2**mutation2))))
-    return(c(p1Score,p2Score))
+    p1Score_new <- (r1*p1Score*(H1-(p1Score*(genome1**mutation1))))
+    p2Score_new <- (r2*p2Score*(H2-(p2Score*(genome2**mutation2))))
+    return(c(p1Score_new,p2Score_new))
   })
   
   
