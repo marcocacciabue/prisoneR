@@ -29,9 +29,10 @@ library(deSolve)
 #' @export
 #'
 #' @examples
-game <- function(    funGrowth, #growth function
-                     play1, #strategy of player 1
-                     play2, #strategy of player 2
+game <- function(    type=c("May","Lotka","Custom"),
+                     funGrowth, #growth function
+                     play1=alwdeff, #strategy of player 1
+                     play2=alwdeff, #strategy of player 2
                      interaction, # interaction function
                      population1 = 0.1, #proportion of population1
                      population2 = 0.1, #proportion of population2
@@ -39,24 +40,43 @@ game <- function(    funGrowth, #growth function
                      parameters #list of parameters to pass to ode solver
                      ){
   
+  #check type parameter
+  if(is.null(type)|missing(type))
+    stop("'type' must be set and must be one of the following: May Lotka or Custom")
+  
+  
+  type<-match.arg(type)
+  funGrowth<- switch(type, "May" = MAY, "Lotka" = LV, "Custom" = funGrowth)
+  interaction<- switch(type, "May" = interaction_dynamic_MAY, 
+                       "Lotka" = interaction_dynamic_LV, 
+                       "Custom" = interaction)
+  
+  
+  #check if functions are given in case type = "Custom"
+  if(type== "Custom"){
+    if(missing(funGrowth)|is.null(funGrowth)|!is.function(funGrowth)){
+    stop("'funGrowth' should be given as a function.You can try preloaded LV or MAY accordingly")
+    }
+    if(missing(interaction)|is.null(interaction)|!is.function(interaction))
+    stop("'interaction' should be given as a function.You can try preloaded interaction_dynamic_MAY or interaction_dynamic_LV accordingly")
+  }
 
-  #check if functions are given
-  if(is.null(funGrowth)|!is.function(funGrowth))
-  stop("'funGrowth' should be given as a function.You can try preloaded LV or MAY accordingly")
 
-  print(names(funGrowth))
-  
 
+  if(is.null(play1))
+    print("Player 1 strategy is set to Alwaysfunctional")
+    play1<-alwfunc
+  if(!is.function(play1))
+    stop("'play1' should be given as a function")
+  
+  if(is.null(play2))
+    print("Player 2 strategy is set to Alwaysfunctional")
+    play2<-alwfunc
+    
+  if(!is.function(play2))
+    stop("'play2' should be given as a function")
   
   
-  if(is.null(play1)|!is.function(play1))
-      stop("'play1' should be given as a function")
-   
-  if(is.null(play2)|!is.function(play2))
-      stop("'play2' should be given as a function")
-  
-  if(is.null(interaction)|!is.function(interaction))
-      stop("'interaction' should be given as a function.You can try preloaded interaction_dynamic_MAY or interaction_dynamic_LV accordingly")
   
                 
   #check if relevant integers are given  
@@ -73,9 +93,7 @@ game <- function(    funGrowth, #growth function
 
   if(!is.list(parameters)) stop("'parameters' should be given as a list of values")
   
-  
-  funGrowth_args<-as.list(args(interaction))
-  # print(as.list(environment(), all=TRUE))
+
   with(as.list(c(funGrowth,
                  play1,
                  play2,
@@ -208,10 +226,11 @@ stgr1<-check_strategy("Count_defective")
 stgr2<-check_strategy("Count_defective")
 set.seed(20)
 L<-"a"
-simulationLV <- game(      funGrowth="LV", #Growth function to pass to ode solver
-                           play1=count_def, #strategy of player 1
-                           play2=randdeff, #strategy of player 2
-                           interaction=interaction_dynamic_LV, # interaction function
+simulationLV <- game(      type="Custom",
+                           funGrowth=MAY, #Growth function to pass to ode solver
+                           play1=NULL, #strategy of player 1
+                           play2=NULL, #strategy of player 2
+                           interaction=interaction_dynamic_MAY, # interaction function
                            generations= 480, #number of generations
                            population1= 0.11, #proportion of population1
                            population2= 0.1, #proportion of population2
