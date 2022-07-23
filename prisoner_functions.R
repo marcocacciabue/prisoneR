@@ -33,6 +33,8 @@ game <- function(    type=c("May","Lotka","Custom"),
                      funGrowth, #growth function
                      play1=alwdeff, #strategy of player 1
                      play2=alwdeff, #strategy of player 2
+                     k1=1, # population 1 carrying capacity
+                     k2=2, # population 2 carrying capacity
                      interaction, # interaction function
                      population1 = 0.1, #proportion of population1
                      population2 = 0.1, #proportion of population2
@@ -46,23 +48,24 @@ game <- function(    type=c("May","Lotka","Custom"),
   
   
   type<-match.arg(type)
-  funGrowth<- switch(type, "May" = MAY, "Lotka" = LV, "Custom" = funGrowth)
-  interaction<- switch(type, "May" = interaction_dynamic_MAY, 
-                       "Lotka" = interaction_dynamic_LV, 
-                       "Custom" = interaction)
-  
-  
   #check if functions are given in case type = "Custom"
   if(type== "Custom"){
     if(missing(funGrowth)|is.null(funGrowth)|!is.function(funGrowth)){
-    stop("'funGrowth' should be given as a function.You can try preloaded LV or MAY accordingly")
+      stop("'funGrowth' should be given as a function.You can try preloaded LV or MAY accordingly")
     }
     if(missing(interaction)|is.null(interaction)|!is.function(interaction))
-    stop("'interaction' should be given as a function.You can try preloaded interaction_dynamic_MAY or interaction_dynamic_LV accordingly")
+      stop("'interaction' should be given as a function.You can try preloaded interaction_dynamic_MAY or interaction_dynamic_LV accordingly")
   }
-
-
-
+  
+  funGrowth<- switch(type, 
+                     "May" = MAY, 
+                     "Lotka" = LV, 
+                     "Custom" = funGrowth)
+  interaction<- switch(type, 
+                       "May" = interaction_dynamic_MAY, 
+                       "Lotka" = interaction_dynamic_LV, 
+                       "Custom" = interaction)
+  
   if(is.null(play1))
     print("Player 1 strategy is set to Alwaysfunctional")
     play1<-alwfunc
@@ -97,6 +100,8 @@ game <- function(    type=c("May","Lotka","Custom"),
   with(as.list(c(funGrowth,
                  play1,
                  play2,
+                 k1,
+                 k2,
                  population1,
                  population2,
                  generations,
@@ -106,8 +111,6 @@ game <- function(    type=c("May","Lotka","Custom"),
                    # add check step to control that funGrowth`s parameters
                    # are included in parameters
                    
-                   # TODO
-                   # add check step of population1,population2, generations
                    
                    # TODO
                    # Discuss possible checks for parameters (How to deal
@@ -185,9 +188,7 @@ game <- function(    type=c("May","Lotka","Custom"),
 #####         Definimos los parametros del modelo LV                ######
 ##########################################################################
 
-parametros <- list(k1 = 1, # population 1 carrying capacity
-                   k2 = 1,# population 2 carrying capacity
-                   mutation1 = 10**-6,
+parametros <- list(mutation1 = 10**-6,
                    mutation2 = 10**-6,
                    genome1 = 5000,
                    genome2 = 8500,
@@ -227,7 +228,7 @@ stgr2<-check_strategy("Count_defective")
 set.seed(20)
 L<-"a"
 simulationLV <- game(      type="Custom",
-                           funGrowth=MAY, #Growth function to pass to ode solver
+                           #Growth function to pass to ode solver
                            play1=NULL, #strategy of player 1
                            play2=NULL, #strategy of player 2
                            interaction=interaction_dynamic_MAY, # interaction function
@@ -238,7 +239,8 @@ simulationLV <- game(      type="Custom",
 ) 
 
 
-simulationMAY <- game(       funGrowth=MAY, #Growth function to pass to ode solver
+simulationMAY <- game(       type="May",
+                             funGrowth=MAY, #Growth function to pass to ode solver
                              play1=count_def, #strategy of player 1
                              play2=count_def, #strategy of player 2
                              interaction=interaction_dynamic_MAY, # interaction function
