@@ -107,6 +107,11 @@ game <- function(    type=c("May","Lotka","Custom"),
                  generations,
                  parameters)),{    
 
+                   
+                   # TODO
+                   # pass generation number to interaction funcion in other to be able 
+                   # to respond to generation number (for specific experiments)
+                   
                    # TODO
                    # add check step to control that funGrowth`s parameters
                    # are included in parameters
