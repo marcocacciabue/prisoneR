@@ -10,15 +10,19 @@ library(deSolve)
 #' game simulation
 #' 
 #' `game()` returns a data.frame with the Fst values for the simulated
-#' interactions between defective and helper viral particles.
+#' interactions between two populations of viral particles.
 #'
+#'
+#' @param type 
 #' @param funGrowth 
 #' @param play1 
 #' @param play2 
-#' @param population1 
-#' @param population2 
-#' @param generations 
 #' @param interaction 
+#' @param input1 
+#' @param input2 
+#' @param generations 
+#' @param k1 
+#' @param k2 
 #' @param parameters 
 #'
 #' @return A data frame with the obtained scores. The output has the following columns:
@@ -33,22 +37,21 @@ game <- function(    type=c("May","Lotka","Custom"),
                      funGrowth, #growth function
                      play1=alwdeff, #strategy of player 1
                      play2=alwdeff, #strategy of player 2
-                     k1=1, # population 1 carrying capacity
-                     k2=2, # population 2 carrying capacity
                      interaction, # interaction function
-                     population1 = 0.1, #proportion of population1
-                     population2 = 0.1, #proportion of population2
-                     generations = 50, #number of generations
+                     input1 = NULL, #initial condition for player 1
+                     input2 = NULL, #initial condition for player 2
+                     generations = NULL, #number of generations
+                     k1=NULL,
+                     k2=NULL,
                      parameters #list of parameters to pass to ode solver
                      ){
   
   #check type parameter
   if(is.null(type)|missing(type))
     stop("'type' must be set and must be one of the following: May Lotka or Custom")
-  
-  
   type<-match.arg(type)
-  #check if functions are given in case type = "Custom"
+  
+  #handle functions in case type = "Custom"
   if(type== "Custom"){
     if(missing(funGrowth)|is.null(funGrowth)|!is.function(funGrowth)){
       stop("'funGrowth' should be given as a function.You can try preloaded LV or MAY accordingly")
@@ -71,45 +74,76 @@ game <- function(    type=c("May","Lotka","Custom"),
     play1<-alwfunc
   if(!is.function(play1))
     stop("'play1' should be given as a function")
-  
   if(is.null(play2))
     print("Player 2 strategy is set to Alwaysfunctional")
     play2<-alwfunc
-    
   if(!is.function(play2))
     stop("'play2' should be given as a function")
   
+
+  #check if parameters is a list
+  if(!is.list(parameters)|is.null(parameters)) stop("'parameters' should be given as a list of values")
+  
+  #check if no duplication of arguments are given in parameters and individuals arguments
+  if (!is.null(generations) & "generations" %in% names(parameters))
+    stop("If 'parameters' is a list that contains generations, argument 'generations' should be NULL")
+  if (!is.null(input1) & "input1" %in% names(parameters))
+    stop("If 'parameters' is a list that contains input1, argument 'input1' should be NULL")
+  if (!is.null(input2) & "input2" %in% names(parameters))
+    stop("If 'parameters' is a list that contains input2, argument 'input2' should be NULL")
+  if (!is.null(k1) & "k1" %in% names(parameters))
+    stop("If 'parameters' is a list that contains k1, argument 'k1' should be NULL")
+  if (!is.null(k2) & "k2" %in% names(parameters))
+    stop("If 'parameters' is a list that contains k2, argument 'k2' should be NULL")
   
   
-                
+  # define corresponding arguments given in parameters 
+  if (!is.null(parameters$input1)) input1 <- parameters$input1
+  if (!is.null(parameters$input2)) input2 <- parameters$input2
+  if (!is.null(parameters$generations)) generations <- parameters$generations
+  if (!is.null(parameters$k1)) k1 <- parameters$k1
+  if (!is.null(parameters$k2))  k2 <- parameters$k2
+  
+  # Define general values in case no arguments are given.  
+  if (is.null(input1) & !("input1" %in% names(parameters))) input1 <- 0.1 
+  if (is.null(input2) & !("input2" %in% names(parameters))) input2 <- 0.1 
+  if (is.null(generations) & !("generations" %in% names(parameters))) generations <- 50
+  if (is.null(k1) & !("k1" %in% names(parameters))) k1 <- 1 
+  if (is.null(k2) & !("k2" %in% names(parameters))) k2 <- 1  
+  
+  
+    
   #check if relevant integers are given  
-  if((!is.numeric(population1))|(population1>0.99)|(population1<0.01))
-    stop("'population1' should be given as an numeric of values between 0.01 and 0.99")
- 
-  if((!is.numeric(population2))|(population2>0.99)|(population2<0.01))
-    stop("'population2' should be given as an numeric of values between 0.01 and 0.99")
+  if(!is.numeric(input1))
+    stop("'input1' should be given as an numeric")
   
+  if(!is.numeric(input2))
+    stop("'input2' should be given as an numeric")
+    
   if((!generations == round(generations))|(generations>1000)|(generations<2))
     stop("'generations' should be given as an interger of values between 2 and 1000")
+    
+  if(!is.numeric(k1))
+    stop("'k1' should be given as an numeric")
+  if(!is.numeric(k2))
+    stop("'k2' should be given as an numeric")
   
-  #check if parameters is a list
-
-  if(!is.list(parameters)) stop("'parameters' should be given as a list of values")
-  
-
   with(as.list(c(funGrowth,
                  play1,
                  play2,
+                 input1,
+                 input2,
                  k1,
                  k2,
-                 population1,
-                 population2,
                  generations,
                  parameters)),{    
 
-                   
+                  print(k1)
+                  print(parameters$k1)
+                  print(input1)
+                  print(input2)
                    # TODO
-                   # pass generation number to interaction funcion in other to be able 
+                   # pass generation number to interaction function in other to be able 
                    # to respond to generation number (for specific experiments)
                    
                    # TODO
@@ -125,11 +159,11 @@ game <- function(    type=c("May","Lotka","Custom"),
                    ## initial values of the two populations that
                    ## compose deserters (need help) and helpers (not deserters) 
                    
-                   p1Score <- population1
-                   p2Score <- population2
+                   p1Score <- input1
+                   p2Score <- input2
                    p3Score <- 0
                    p4Score <- 1
-                   p5Score <- (population1/population2)
+                   p5Score <- (input1/input2)
                    
 
                    
@@ -137,6 +171,8 @@ game <- function(    type=c("May","Lotka","Custom"),
                    # prev=NULL because this is the first interaction. If strategy is dependent 
                    # on the previous interaction the corresponding function should deal 
                    # correctly with the first value)
+                   
+                   
                    
                    p1Move <- play1(prev=NULL,score=p1Score,k=k1)
                    p2Move <- play2(prev=NULL,score=p2Score,k=k2)
@@ -164,7 +200,7 @@ game <- function(    type=c("May","Lotka","Custom"),
                      p1Score <- out[1]
                      p2Score <- out[2]
                      p3Score <- out[1]/out[2]
-                     p4Score <- ((out[1]/out[2])/(population1/population2))
+                     p4Score <- ((out[1]/out[2])/(input1/input2))
                      p5Score <- (Total_fst[length(Total_fst)]/(out[1]/out[2]))
                      
                      #Vuelvo a calcular los move para el siguiente ciclo
@@ -218,7 +254,9 @@ parametros <- list(mutation1 = 10**-6,
                    a12_2_2=-0.1,
                    a21_2_2=-0.1,
                    H1=NULL,
-                   H2=NULL
+                   H2=NULL,
+                   k1=20,
+                   input1=30
 ) 
 
 
@@ -232,14 +270,11 @@ stgr1<-check_strategy("Count_defective")
 stgr2<-check_strategy("Count_defective")
 set.seed(20)
 L<-"a"
-simulationLV <- game(      type="Custom",
+simulationLV <- game(      type="May",
                            #Growth function to pass to ode solver
                            play1=NULL, #strategy of player 1
                            play2=NULL, #strategy of player 2
                            interaction=interaction_dynamic_MAY, # interaction function
-                           generations= 480, #number of generations
-                           population1= 0.11, #proportion of population1
-                           population2= 0.1, #proportion of population2
                            parameters=parametros #list of parameters to pass to ode solver
 ) 
 
@@ -250,8 +285,6 @@ simulationMAY <- game(       type="May",
                              play2=count_def, #strategy of player 2
                              interaction=interaction_dynamic_MAY, # interaction function
                              generations= 480, #number of generations
-                             population1= 0.2, #proportion of population1
-                             population2= 0.1, #proportion of population2
                              parameters=parametros #list of parameters to pass to ode solver
 ) 
 
