@@ -17,7 +17,7 @@ LV<-function(p1Score,p2Score,parameters){
     })
   }
   
-  with(as.list(c(p1Score, p2Score,parameters)),{
+  with(as.list(c(p1Score, p2Score, parameters)),{
   #  Compute population dynamics for this parameters
   state <- c(x1 = as.numeric(p1Score), x2 = as.numeric(p2Score))
   tiempos <- seq(0, 1, by = 1) # sequence for the passage of time

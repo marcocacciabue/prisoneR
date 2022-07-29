@@ -98,50 +98,42 @@ game <- function(    type=c("May","Lotka","Custom"),
   
   
   # define corresponding arguments given in parameters 
-  if (!is.null(parameters$input1)) input1 <- parameters$input1
-  if (!is.null(parameters$input2)) input2 <- parameters$input2
-  if (!is.null(parameters$generations)) generations <- parameters$generations
-  if (!is.null(parameters$k1)) k1 <- parameters$k1
-  if (!is.null(parameters$k2))  k2 <- parameters$k2
+  if (!is.null(parameters$input1))  parameters$input1 <- input1 
+  if (!is.null(parameters$input2)) parameters$input2 <- input2 
+  if (!is.null(generations)) parameters$generations <- generations 
+  if (!is.null(k1)) parameters$k1 <- k1
+  if (!is.null(k2))  parameters$k2 <- k2
   
   # Define general values in case no arguments are given.  
-  if (is.null(input1) & !("input1" %in% names(parameters))) input1 <- 0.1 
-  if (is.null(input2) & !("input2" %in% names(parameters))) input2 <- 0.1 
-  if (is.null(generations) & !("generations" %in% names(parameters))) generations <- 50
-  if (is.null(k1) & !("k1" %in% names(parameters))) k1 <- 1 
-  if (is.null(k2) & !("k2" %in% names(parameters))) k2 <- 1  
+  if (is.null(input1) & !("input1" %in% names(parameters))) parameters$input1 <- 0.1 
+  if (is.null(input2) & !("input2" %in% names(parameters))) parameters$input2 <- 0.1 
+  if (is.null(generations) & !("generations" %in% names(parameters))) parameters$generations <- 50
+  if (is.null(k1) & !("k1" %in% names(parameters))) parameters$k1 <- 1 
+  if (is.null(k2) & !("k2" %in% names(parameters))) parameters$k2 <- 1  
   
   
     
   #check if relevant integers are given  
-  if(!is.numeric(input1))
+  if(!is.numeric(parameters$input1))
     stop("'input1' should be given as an numeric")
   
-  if(!is.numeric(input2))
+  if(!is.numeric(parameters$input2))
     stop("'input2' should be given as an numeric")
     
-  if((!generations == round(generations))|(generations>1000)|(generations<2))
+  if((!parameters$generations == round(parameters$generations))|(parameters$generations>1000)|(parameters$generations<2))
     stop("'generations' should be given as an interger of values between 2 and 1000")
     
-  if(!is.numeric(k1))
+  if(!is.numeric(parameters$k1))
     stop("'k1' should be given as an numeric")
-  if(!is.numeric(k2))
+  if(!is.numeric(parameters$k2))
     stop("'k2' should be given as an numeric")
   
   with(as.list(c(funGrowth,
                  play1,
                  play2,
-                 input1,
-                 input2,
-                 k1,
-                 k2,
-                 generations,
                  parameters)),{    
 
-                  print(k1)
-                  print(parameters$k1)
-                  print(input1)
-                  print(input2)
+
                    # TODO
                    # pass generation number to interaction function in other to be able 
                    # to respond to generation number (for specific experiments)
@@ -254,9 +246,7 @@ parametros <- list(mutation1 = 10**-6,
                    a12_2_2=-0.1,
                    a21_2_2=-0.1,
                    H1=NULL,
-                   H2=NULL,
-                   k1=20,
-                   input1=30
+                   H2=NULL
 ) 
 
 
@@ -270,44 +260,31 @@ stgr1<-check_strategy("Count_defective")
 stgr2<-check_strategy("Count_defective")
 set.seed(20)
 L<-"a"
-simulationLV <- game(      type="May",
-                           #Growth function to pass to ode solver
-                           play1=NULL, #strategy of player 1
-                           play2=NULL, #strategy of player 2
-                           interaction=interaction_dynamic_MAY, # interaction function
+simulationLV <- game(      type="Lotka",
+                           play1=count_def, #strategy of player 1
+                           play2=count_def, #strategy of player 2,
                            parameters=parametros #list of parameters to pass to ode solver
 ) 
 
 
+
+
 simulationMAY <- game(       type="May",
-                             funGrowth=MAY, #Growth function to pass to ode solver
                              play1=count_def, #strategy of player 1
                              play2=count_def, #strategy of player 2
-                             interaction=interaction_dynamic_MAY, # interaction function
-                             generations= 480, #number of generations
                              parameters=parametros #list of parameters to pass to ode solver
 ) 
 
-as.character(LV)
 
-head(simulationMAY)
+library(ggplot2)
 
-try(LV(p1Score=1,p2Score=3,as.list(parametros))
-    )
+plot_absolute<-function(df){
 
-environment(simulationLV)
-trace(.last_env)
-ls()
-.last_env
-base::eval(MAY)
-interaction_dynamic_MAY()
-print(as.list(environment(), all=TRUE))
+generations<-length(df$Absolute_fst)
+x_time<-1:generations
+ggplot2::ggplot(df)+
+  geom_line(aes(x=x_time,y=.data$Absolute_fst))
+}
 
-attr(LV,"function")
-
-eval(substitute(LV),parametros) 
-  objeto 'a21_2_2' no encontrado 
-  
-  deSolve::ode
-assign
-#> y <- x * 10
+plot_absolute(simulationMAY)
+plot_absolute(simulationLV)
