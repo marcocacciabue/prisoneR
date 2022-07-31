@@ -27,7 +27,7 @@ library(ggplot2)
 #'
 #' @export
 #'
-#' @example examples/game.R
+#' @example inst/examples/game.R
 #'
 game <- function(    type=c("May","Lotka","Custom"),
                      funGrowth, #growth function
@@ -230,8 +230,8 @@ game <- function(    type=c("May","Lotka","Custom"),
 #'
 #' @return A ggplot2 plot
 #' @export
-#'
-#' @examples inst/examples/plot_absolute.R
+#' @importFrom ggplot2 aes geom_line labs .data
+#' @example inst/examples/plot_absolute.R
 #'
 #'
 #'
