@@ -1,7 +1,8 @@
+Marco Cacciabue, Roman Gonzalez Mora, Pablo Aguilera
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# prisoneR
+# **prisoneR** <img src='man/figures/hex.png' align="right" height="200" />
 
 <!-- badges: start -->
 
@@ -12,14 +13,8 @@ The goal of prisoneR is to …
 
 ## Installation
 
-You can install the released version of prisoneR from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("prisoneR")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")

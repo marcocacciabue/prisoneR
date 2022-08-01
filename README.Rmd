@@ -1,5 +1,6 @@
 ---
 output: github_document
+author: Marco Cacciabue, Roman Gonzalez Mora, Pablo Aguilera
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,11 +10,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
+  dpi=300,
   out.width = "100%"
 )
+app_name <- "prisoneR"
 ```
 
-# prisoneR
+# **`r app_name `** <img src='man/figures/hex.png' align="right" height="200" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/marcocacciabue/prisoneR/workflows/R-CMD-check/badge.svg)](https://github.com/marcocacciabue/prisoneR/actions)
@@ -23,13 +26,7 @@ The goal of prisoneR is to ...
 
 ## Installation
 
-You can install the released version of prisoneR from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("prisoneR")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
