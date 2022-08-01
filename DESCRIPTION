@@ -9,12 +9,12 @@ Authors@R:
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")),
       person(given = "Roman",
              family = "Gonzalez Mora",
-             role = c("aut", "cre"),
+             role = c("aut", "ctb"),
              email = "gonzalezmora.roman@inta.gob.ar",
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")),
       person(given = "Pablo",
              family = "Aguilera",
-             role = c("aut", "cre"),
+             role = c("aut", "ctb"),
              email = "aguilera.pablo@inta.gob.ar",
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")))
 Description: What the package does (one paragraph).
