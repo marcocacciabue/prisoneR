@@ -19,29 +19,29 @@ game(
 )
 }
 \arguments{
-\item{type}{method for which to run the function: \code{"May"}, \code{"Lotka"}, or
+\item{type}{string: method for which to run the function: \code{"May"}, \code{"Lotka"}, or
 \code{"Custom"} (Must be set).}
 
-\item{funGrowth}{A function that simulates the growth dynamics.}
+\item{funGrowth}{function: simulates the growth dynamics.}
 
-\item{play1}{A function that simulates the population 1 decision making (defaults to always cooperative).}
+\item{play1}{function: simulates the population 1 decision making (defaults to always cooperative).}
 
-\item{play2}{A function that simulates the population 2 decision making (defaults to always cooperative).}
+\item{play2}{function: simulates the population 2 decision making (defaults to always cooperative).}
 
-\item{interaction}{A function that handles the changes in growth parameters passed to
+\item{interaction}{function: handles the changes in growth parameters passed to
 \code{funGrowth} according to the interaction matrix.}
 
-\item{input1}{A numeric for the initial condition of population 1 (defaults to 0.1).}
+\item{input1}{numeric: the initial condition of population 1 (defaults to 0.1).}
 
-\item{input2}{A numeric for the initial condition of population 2 (defaults to 0.1).}
+\item{input2}{numeric: the initial condition of population 2 (defaults to 0.1).}
 
-\item{generations}{A numeric for the number of rounds (generations) to simulate.}
+\item{generations}{numeric: the number of rounds (generations) to simulate.}
 
-\item{k1}{A numeric that represents the maximum system capacity for population 1. Only relevant for Lotka method (default=1).}
+\item{k1}{numeric: the maximum system capacity for population 1. Only relevant for Lotka method (default=1).}
 
-\item{k2}{A numeric that represents the maximum system capacity for population 2. Only relevant for Lotka method (default=1).}
+\item{k2}{numeric: the maximum system capacity for population 2. Only relevant for Lotka method (default=1).}
 
-\item{parameters}{A list that includes all the arguments ALL the necesary for \code{funGrowth}, \code{interaction}, \code{play1} and \code{play2} functions.}
+\item{parameters}{list: all the arguments ALL the necessary for \code{funGrowth}, \code{interaction}, \code{play1} and \code{play2} functions.}
 }
 \value{
 A \code{\link[=data.frame]{data.frame()}} with the obtained scores. The output has the following columns:

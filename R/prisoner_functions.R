@@ -9,19 +9,19 @@ library(ggplot2)
 #' interactions between two populations of viral particles.
 #'
 #'
-#' @param type method for which to run the function: `"May"`, `"Lotka"`, or
+#' @param type string: method for which to run the function: `"May"`, `"Lotka"`, or
 #'   `"Custom"` (Must be set).
-#' @param funGrowth A function that simulates the growth dynamics.
-#' @param play1 A function that simulates the population 1 decision making (defaults to always cooperative).
-#' @param play2 A function that simulates the population 2 decision making (defaults to always cooperative).
-#' @param interaction A function that handles the changes in growth parameters passed to
+#' @param funGrowth function: simulates the growth dynamics.
+#' @param play1 function: simulates the population 1 decision making (defaults to always cooperative).
+#' @param play2 function: simulates the population 2 decision making (defaults to always cooperative).
+#' @param interaction function: handles the changes in growth parameters passed to
 #'  `funGrowth` according to the interaction matrix.
-#' @param input1 A numeric for the initial condition of population 1 (defaults to 0.1).
-#' @param input2 A numeric for the initial condition of population 2 (defaults to 0.1).
-#' @param generations A numeric for the number of rounds (generations) to simulate.
-#' @param k1 A numeric that represents the maximum system capacity for population 1. Only relevant for Lotka method (default=1).
-#' @param k2 A numeric that represents the maximum system capacity for population 2. Only relevant for Lotka method (default=1).
-#' @param parameters A list that includes all the arguments ALL the necesary for `funGrowth`, `interaction`, `play1` and `play2` functions.
+#' @param input1 numeric: the initial condition of population 1 (defaults to 0.1).
+#' @param input2 numeric: the initial condition of population 2 (defaults to 0.1).
+#' @param generations numeric: the number of rounds (generations) to simulate.
+#' @param k1 numeric: the maximum system capacity for population 1. Only relevant for Lotka method (default=1).
+#' @param k2 numeric: the maximum system capacity for population 2. Only relevant for Lotka method (default=1).
+#' @param parameters list: all the arguments ALL the necessary for `funGrowth`, `interaction`, `play1` and `play2` functions.
 #'
 #' @returns A [data.frame()] with the obtained scores. The output has the following columns:
 #'
@@ -226,9 +226,9 @@ game <- function(    type=c("May","Lotka","Custom"),
 #' visualizing Absolute Fst across the generations. To use after running  the
 #' `game()` function
 #'
-#' @param df a dataframe created with the `game()` function
+#' @param df dataframe: created with the `game()` function
 #'
-#' @return A ggplot2 plot
+#' @return ggplot2 object
 #' @export
 #' @importFrom ggplot2 aes geom_line labs .data
 #' @example inst/examples/plot_absolute.R

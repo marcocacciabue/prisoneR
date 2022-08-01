@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 creating_package.R
+trying_manual_integration.R
+^\.github$
+^README\.Rmd$

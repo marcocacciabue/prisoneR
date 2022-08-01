@@ -7,10 +7,10 @@
 plot_absolute(df)
 }
 \arguments{
-\item{df}{a dataframe created with the \code{game()} function}
+\item{df}{dataframe: created with the \code{game()} function}
 }
 \value{
-A ggplot2 plot
+ggplot2 object
 }
 \description{
 \code{plot_absolute()} is a simple helper function that returns a ggplot object
