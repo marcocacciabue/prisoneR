@@ -5,3 +5,4 @@ creating_package.R
 trying_manual_integration.R
 ^\.github$
 ^README\.Rmd$
+man/figures/hex.png
