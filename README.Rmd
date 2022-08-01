@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  dpi=300,
+  dpi = 300,
   out.width = "100%"
 )
 app_name <- "prisoneR"
@@ -41,42 +41,49 @@ library(prisoneR)
 
 ## First we create a simple list of parameters to run the simulation
 
-params<- prepare_parameters()
+params <- prepare_parameters()
 
 # we can control or modify the relevant arguments accordingly
 
-params
+head(params)
 ```
 
 Now that we have the parameters, we can run the simulation
 
 ```{r simulation}
 library(prisoneR)
-simulationLV <- game(type="Lotka",
-                     play1="Count_defective", #strategy of player 
-                     play2="Count_defective", #strategy of player 2,#
-                     parameters=params #list of parameters to pass to ode solver
- )
+simulationLV <- game(
+  type = "Lotka",
+  play1 = "Count_defective", # strategy of player
+  play2 = "Count_defective", # strategy of player 2,#
+  parameters = params # list of parameters to pass to the game function
+)
+```
+`SimulationLV` is a `data.frame()` with the simulation  results.
+
+```{r data, echo = TRUE}
+head(simulationLV)
 ```
 
-*`r app_name `* includes simple helpers funtions to plot  the results, for example plotting the relative Fst:
+*`r app_name `* includes simple helper functions to plot  the results. For example, for plotting the relative Fst, simply use:
 
-```{r relative, echo = FALSE}
+```{r relative, echo = TRUE}
 plot_relative(simulationLV)
 ```
-or the Absolute Fst
+or for the Absolute Fst run:
 
-```{r absolute, echo = FALSE}
+```{r absolute, echo = TRUE}
 plot_absolute(simulationLV)
 ```
 We can also run the simulation under May logistic map
 ```{r simulationMAY}
 library(prisoneR)
-simulationMAY <- game(type="May",
-                     play1="Count_defective", #strategy of player 
-                     play2="Count_defective", #strategy of player 2,#
-                     parameters=params #list of parameters to pass to ode solver
- )
+simulationMAY <- game(
+  type = "May",
+  play1 = "Count_defective", # strategy of player
+  play2 = "Count_defective", # strategy of player 2,#
+  parameters = params # list of parameters to pass to ode solver
+)
 ```
 And then plot the results
 

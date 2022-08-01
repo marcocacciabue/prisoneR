@@ -30,11 +30,11 @@ library(prisoneR)
 
 ## First we create a simple list of parameters to run the simulation
 
-params<- prepare_parameters()
+params <- prepare_parameters()
 
 # we can control or modify the relevant arguments accordingly
 
-params
+head(params)
 #> $mutation1
 #> [1] 1e-06
 #> 
@@ -52,80 +52,61 @@ params
 #> 
 #> $r2_1_1
 #> [1] 0.19
-#> 
-#> $a12_1_1
-#> [1] 0.012
-#> 
-#> $a21_1_1
-#> [1] -0.2
-#> 
-#> $r1_1_2
-#> [1] 0.1
-#> 
-#> $r2_1_2
-#> [1] 0.0018
-#> 
-#> $a12_1_2
-#> [1] -1
-#> 
-#> $a21_1_2
-#> [1] 0.1
-#> 
-#> $r1_2_1
-#> [1] 0.15
-#> 
-#> $r2_2_1
-#> [1] 0.18
-#> 
-#> $a12_2_1
-#> [1] -1
-#> 
-#> $a21_2_1
-#> [1] -0.001
-#> 
-#> $r1_2_2
-#> [1] 0.8
-#> 
-#> $r2_2_2
-#> [1] -0.8
-#> 
-#> $a12_2_2
-#> [1] -0.1
-#> 
-#> $a21_2_2
-#> [1] -0.1
 ```
 
 Now that we have the parameters, we can run the simulation
 
 ``` r
 library(prisoneR)
-simulationLV <- game(type="Lotka",
-                     play1="Count_defective", #strategy of player 
-                     play2="Count_defective", #strategy of player 2,#
-                     parameters=params #list of parameters to pass to ode solver
- )
+simulationLV <- game(
+  type = "Lotka",
+  play1 = "Count_defective", # strategy of player
+  play2 = "Count_defective", # strategy of player 2,#
+  parameters = params # list of parameters to pass to the game function
+)
 #> Running  Lotka  simulation for  50  generations with the following parameters 
 #>  population 1 initial condition  0.1 
 #>  population 2 initial condition  0.1
 ```
 
-*prisoneR* includes simple helpers funtions to plot the results, for
-example plotting the relative Fst:
+`SimulationLV` is a `data.frame()` with the simulation results.
 
-<img src="man/figures/README-relative-1.png" width="100%" /> or the
-Absolute Fst
+``` r
+head(simulationLV)
+#>         xn1       xn2 Relative_fst Absolute_fst  Total_fst
+#> 1 0.1000000 0.1000000     0.000000     1.000000 1.00000000
+#> 2 0.2143934 0.1191230     1.799765     1.799765 0.55562800
+#> 3 0.4011392 0.1421519     2.821905     2.821905 0.19689821
+#> 4 0.6214614 0.1701634     3.652146     3.652146 0.05391302
+#> 5 0.6734945 0.1971312     3.416478     3.416478 0.01578029
+#> 6 0.7272209 0.2272049     3.200728     3.200728 0.00493022
+```
+
+*prisoneR* includes simple helper functions to plot the results. For
+example, for plotting the relative Fst, simply use:
+
+``` r
+plot_relative(simulationLV)
+```
+
+<img src="man/figures/README-relative-1.png" width="100%" /> or for the
+Absolute Fst run:
+
+``` r
+plot_absolute(simulationLV)
+```
 
 <img src="man/figures/README-absolute-1.png" width="100%" /> We can also
 run the simulation under May logistic map
 
 ``` r
 library(prisoneR)
-simulationMAY <- game(type="May",
-                     play1="Count_defective", #strategy of player 
-                     play2="Count_defective", #strategy of player 2,#
-                     parameters=params #list of parameters to pass to ode solver
- )
+simulationMAY <- game(
+  type = "May",
+  play1 = "Count_defective", # strategy of player
+  play2 = "Count_defective", # strategy of player 2,#
+  parameters = params # list of parameters to pass to ode solver
+)
 #> Running  May  simulation for  50  generations with the following parameters 
 #>  population 1 initial condition  0.1 
 #>  population 2 initial condition  0.1

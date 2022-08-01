@@ -14,7 +14,7 @@ LV(p1Score, p2Score, parameters)
 \item{parameters}{list: parameters passed from the \code{game()} function}
 }
 \value{
-Two numerics with the next generation value
+numeric: the next generation values
 }
 \description{
 Lotka-Volterra Growth function
