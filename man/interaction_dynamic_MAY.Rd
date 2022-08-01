@@ -7,11 +7,11 @@
 interaction_dynamic_MAY(p1Move, p2Move, parameters)
 }
 \arguments{
-\item{p1Move}{1 or 2 for previous interaction}
+\item{p1Move}{numeric: 1 or 2 for previous interaction}
 
-\item{p2Move}{1 or 2 for previous interaction}
+\item{p2Move}{numeric: 1 or 2 for previous interaction}
 
-\item{parameters}{A list of parameters passed from the \code{game()} function}
+\item{parameters}{list of parameters passed from the \code{game()} function}
 }
 \value{
 A list with the modified parameters.
@@ -19,10 +19,4 @@ A list with the modified parameters.
 \description{
 Preloaded function that handles the possible interactions
 for a simulation
-}
-\examples{
-
-params<-list(r1_1_1=0.5,r2_1_1=0.5)
-
-interaction_dynamic_MAY<-function(p1Move=1,p2Move=1,parameters=params)
 }

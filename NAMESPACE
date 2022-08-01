@@ -2,6 +2,8 @@
 
 export(game)
 export(plot_absolute)
+export(plot_relative)
+export(prepare_parameters)
 importFrom(ggplot2,.data)
 importFrom(ggplot2,aes)
 importFrom(ggplot2,geom_line)

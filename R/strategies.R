@@ -7,12 +7,14 @@
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
 #'
-randeff <- function(...){
-  val = sample(1:5, 1)
-  if(val>3) {
-    2}
-  else {1}
+randeff <- function(...) {
+  val <- sample(1:5, 1)
+  if (val > 3) {
+    2
+  } else {
+    1
   }
+}
 
 
 
@@ -27,12 +29,14 @@ randeff <- function(...){
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
 #'
-randdeff <- function(...){
-  (tirada = randeff())
-  if (tirada == 1)
-  {2}
-  else{1}
+randdeff <- function(...) {
+  (tirada <- randeff())
+  if (tirada == 1) {
+    2
+  } else {
+    1
   }
+}
 
 
 
@@ -43,8 +47,8 @@ randdeff <- function(...){
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
 #'
-randbasic <- function(...){
-  sample(1:2,1)
+randbasic <- function(...) {
+  sample(1:2, 1)
 }
 
 
@@ -55,7 +59,7 @@ randbasic <- function(...){
 #'
 #' @return Numeric: 2 for NO cooperation
 #'
-alwdeff <- function(...){
+alwdeff <- function(...) {
   2
 }
 
@@ -66,7 +70,7 @@ alwdeff <- function(...){
 #'
 #' @return Numeric: 1 for cooperation
 #'
-alwfunc <- function(...){
+alwfunc <- function(...) {
   1
 }
 
@@ -81,16 +85,18 @@ alwfunc <- function(...){
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
-count_def <- function(prev,score,k,...){
-  with(as.list(c(prev,
-                 score,
-                 k)),{
-  if (score >= k*0.5) {
-    2
-  }else {
-    1
-  }
-                 })
+count_def <- function(prev, score, k, ...) {
+  with(as.list(c(
+    prev,
+    score,
+    k
+  )), {
+    if (score >= k * 0.5) {
+      2
+    } else {
+      1
+    }
+  })
 }
 
 
@@ -103,26 +109,25 @@ count_def <- function(prev,score,k,...){
 #'
 #' @return function: strategy to define next movement
 #'
-check_strategy<-function(strategy='Alwaysfunctional'){
-  if (strategy == 'Alwaysfunctional') {
+check_strategy <- function(strategy = "Alwaysfunctional") {
+  if (strategy == "Alwaysfunctional") {
     play <- alwfunc
   }
-  if (strategy == 'Alwaysdefectiveinterfering') {
+  if (strategy == "Alwaysdefectiveinterfering") {
     play <- alwdeff
   }
-  if (strategy == 'Randommodification') {
+  if (strategy == "Randommodification") {
     play <- randbasic
   }
-  if (strategy== 'Randomeffective') {
+  if (strategy == "Randomeffective") {
     play <- randeff
   }
-  if (strategy == 'Randomdefectiveinterfering') {
+  if (strategy == "Randomdefectiveinterfering") {
     play <- randdeff
   }
 
-  if (strategy == 'Count_defective') {
+  if (strategy == "Count_defective") {
     play <- count_def
   }
   return(play)
 }
-

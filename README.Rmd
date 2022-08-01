@@ -34,25 +34,52 @@ devtools::install_github("marcocacciabue/prisoneR")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to a simple simalation
 
 ```{r example}
 library(prisoneR)
-## basic example code
+
+## First we create a simple list of parameters to run the simulation
+
+params<- prepare_parameters()
+
+# we can control or modify the relevant arguments accordingly
+
+params
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+Now that we have the parameters, we can run the simulation
 
-```{r cars}
-summary(cars)
+```{r simulation}
+library(prisoneR)
+simulationLV <- game(type="Lotka",
+                     play1="Count_defective", #strategy of player 
+                     play2="Count_defective", #strategy of player 2,#
+                     parameters=params #list of parameters to pass to ode solver
+ )
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
+*`r app_name `* includes simple helpers funtions to plot  the results, for example plotting the relative Fst:
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r relative, echo = FALSE}
+plot_relative(simulationLV)
 ```
+or the Absolute Fst
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+```{r absolute, echo = FALSE}
+plot_absolute(simulationLV)
+```
+We can also run the simulation under May logistic map
+```{r simulationMAY}
+library(prisoneR)
+simulationMAY <- game(type="May",
+                     play1="Count_defective", #strategy of player 
+                     play2="Count_defective", #strategy of player 2,#
+                     parameters=params #list of parameters to pass to ode solver
+ )
+```
+And then plot the results
+
+```{r may, echo = FALSE}
+plot_absolute(simulationMAY)
+```

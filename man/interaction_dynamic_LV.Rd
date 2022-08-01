@@ -20,8 +20,3 @@ A list with the modified parameters.
 Preloaded function that handles the possible interactions
 for a simulation
 }
-\examples{
-params<-list(r1_1_1=0.5,r2_1_1=0.5)
-
-interaction_dynamic_MAY<-function(p1Move=1,p2Move=1,parameters=params)
-}

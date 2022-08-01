@@ -23,36 +23,114 @@ devtools::install_github("marcocacciabue/prisoneR")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to a simple simalation
 
 ``` r
 library(prisoneR)
-## basic example code
+
+## First we create a simple list of parameters to run the simulation
+
+params<- prepare_parameters()
+
+# we can control or modify the relevant arguments accordingly
+
+params
+#> $mutation1
+#> [1] 1e-06
+#> 
+#> $mutation2
+#> [1] 1e-06
+#> 
+#> $genome1
+#> [1] 5000
+#> 
+#> $genome2
+#> [1] 8500
+#> 
+#> $r1_1_1
+#> [1] 0.9
+#> 
+#> $r2_1_1
+#> [1] 0.19
+#> 
+#> $a12_1_1
+#> [1] 0.012
+#> 
+#> $a21_1_1
+#> [1] -0.2
+#> 
+#> $r1_1_2
+#> [1] 0.1
+#> 
+#> $r2_1_2
+#> [1] 0.0018
+#> 
+#> $a12_1_2
+#> [1] -1
+#> 
+#> $a21_1_2
+#> [1] 0.1
+#> 
+#> $r1_2_1
+#> [1] 0.15
+#> 
+#> $r2_2_1
+#> [1] 0.18
+#> 
+#> $a12_2_1
+#> [1] -1
+#> 
+#> $a21_2_1
+#> [1] -0.001
+#> 
+#> $r1_2_2
+#> [1] 0.8
+#> 
+#> $r2_2_2
+#> [1] -0.8
+#> 
+#> $a12_2_2
+#> [1] -0.1
+#> 
+#> $a21_2_2
+#> [1] -0.1
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+Now that we have the parameters, we can run the simulation
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+library(prisoneR)
+simulationLV <- game(type="Lotka",
+                     play1="Count_defective", #strategy of player 
+                     play2="Count_defective", #strategy of player 2,#
+                     parameters=params #list of parameters to pass to ode solver
+ )
+#> Running  Lotka  simulation for  50  generations with the following parameters 
+#>  population 1 initial condition  0.1 
+#>  population 2 initial condition  0.1
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
+*prisoneR* includes simple helpers funtions to plot the results, for
+example plotting the relative Fst:
 
-You can also embed plots, for example:
+<img src="man/figures/README-relative-1.png" width="100%" /> or the
+Absolute Fst
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+<img src="man/figures/README-absolute-1.png" width="100%" /> We can also
+run the simulation under May logistic map
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+``` r
+library(prisoneR)
+simulationMAY <- game(type="May",
+                     play1="Count_defective", #strategy of player 
+                     play2="Count_defective", #strategy of player 2,#
+                     parameters=params #list of parameters to pass to ode solver
+ )
+#> Running  May  simulation for  50  generations with the following parameters 
+#>  population 1 initial condition  0.1 
+#>  population 2 initial condition  0.1
+```
+
+And then plot the results
+
+<img src="man/figures/README-may-1.png" width="100%" />
