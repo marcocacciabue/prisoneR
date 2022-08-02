@@ -18,7 +18,8 @@ Authors@R:
              role = c("aut", "ctb"),
              email = "aguilera.pablo@inta.gob.ar",
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")))
-Description: prisoneR is a package.
+Description: prisoneR is a package designed to help simulate viral
+    dynamics.
 License: MIT + file LICENSE
 Authors: Marco Cacciabue <marcocacciabue@yahoo.com> [aut, cre]
     (<https://orcid.org/0000-0002-1429-4252>)Roman Gonzalez Mora
