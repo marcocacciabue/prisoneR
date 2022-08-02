@@ -1,5 +1,6 @@
 Package: prisoneR
-Title: What the Package Does (One Line, Title Case)
+Title: 'prisoneR': simulating virus dynamics with the prisoner dillema
+    framework
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Marco",
@@ -17,18 +18,14 @@ Authors@R:
              role = c("aut", "ctb"),
              email = "aguilera.pablo@inta.gob.ar",
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")))
-Description: What the package does (one paragraph).
+Description: prisoneR is a package.
 License: MIT + file LICENSE
-Imports: 
-    deSolve,
-    ggplot2
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
-description: This package helps virologists to simulate viral dynamics
-    using the prisoner dillema framework. It can handle May logistic and
-    Lotka-Volterra as growth funtions, and several strategies for two
-    viral populations
+Authors: Marco Cacciabue <marcocacciabue@yahoo.com> [aut, cre]
+    (<https://orcid.org/0000-0002-1429-4252>)Roman Gonzalez Mora
+    <gonzalezmora.roman@inta.gob.ar> [aut, ctb]
+    (<https://orcid.org/0000-0002-1429-4252>)Pablo Aguilera
+    <aguilera.pablo@inta.gob.ar> [aut, ctb]
+    (<https://orcid.org/0000-0002-1429-4252>)
 Encoding: UTF-8
 Language: es
 LazyData: true
