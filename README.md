@@ -9,7 +9,8 @@ Marco Cacciabue, Roman Gonzalez Mora, Pablo Aguilera
 [![R-CMD-check](https://github.com/marcocacciabue/prisoneR/workflows/R-CMD-check/badge.svg)](https://github.com/marcocacciabue/prisoneR/actions)
 <!-- badges: end -->
 
-The goal of prisoneR is to …
+This a collection of functions that allows the user to simulate viral
+dynamics interactions by using the prisoner dillema framework-
 
 ## Installation
 
@@ -23,7 +24,7 @@ devtools::install_github("marcocacciabue/prisoneR")
 
 ## Example
 
-This is a basic example which shows you how to a simple simalation
+This is a basic example which shows you how to run a simple simulation
 
 ``` r
 library(prisoneR)
