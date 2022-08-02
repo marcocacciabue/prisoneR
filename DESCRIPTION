@@ -1,6 +1,5 @@
 Package: prisoneR
-Title: 'prisoneR': simulating virus dynamics with the prisoner dillema
-    framework
+Title: simulating virus dynamics with the prisoner dillema framework
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Marco",
@@ -10,23 +9,19 @@ Authors@R:
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")),
       person(given = "Roman",
              family = "Gonzalez Mora",
-             role = c("aut", "ctb"),
+             role = "aut",
              email = "gonzalezmora.roman@inta.gob.ar",
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")),
       person(given = "Pablo",
              family = "Aguilera",
-             role = c("aut", "ctb"),
+             role = "aut",
              email = "aguilera.pablo@inta.gob.ar",
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")))
-Description: prisoneR is a package designed to help simulate viral
-    dynamics.
+Description: Functions that model viral dynamics. It simulate viral
+    interactions using the prisoner dillema framework. For the growth
+    dynamics the May logistic and the Lotka-Volterra equations are
+    implemented.
 License: MIT + file LICENSE
-Authors: Marco Cacciabue <marcocacciabue@yahoo.com> [aut, cre]
-    (<https://orcid.org/0000-0002-1429-4252>)Roman Gonzalez Mora
-    <gonzalezmora.roman@inta.gob.ar> [aut, ctb]
-    (<https://orcid.org/0000-0002-1429-4252>)Pablo Aguilera
-    <aguilera.pablo@inta.gob.ar> [aut, ctb]
-    (<https://orcid.org/0000-0002-1429-4252>)
 Encoding: UTF-8
 Language: es
 LazyData: true
