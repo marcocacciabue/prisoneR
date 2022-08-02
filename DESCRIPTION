@@ -1,11 +1,11 @@
 Package: prisoneR
-Title: prisoneR
-Version: 0.0.0.9000
+Title: What the Package Does (One Line, Title Case)
+Version: 1.0.0
 Authors@R: 
     c(person(given = "Marco",
              family = "Cacciabue",
              role = c("aut", "cre"),
-             email = "marcocacciabue2014@gmail.com",
+             email = "marcocacciabue@yahoo.com",
              comment = c(ORCID = "http://orcid.org/0000-0002-1429-4252")),
       person(given = "Roman",
              family = "Gonzalez Mora",
@@ -25,6 +25,10 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+description: This package helps virologists to simulate viral dynamics
+    using the prisoner dillema framework. It can handle May logistic and
+    Lotka-Volterra as growth funtions, and several strategies for two
+    viral populations
 Encoding: UTF-8
 Language: es
 LazyData: true
