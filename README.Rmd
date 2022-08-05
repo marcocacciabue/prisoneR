@@ -87,6 +87,6 @@ simulationMAY <- game(
 ```
 And then plot the results
 
-```{r may, echo = FALSE}
+```{r may, echo = TRUE}
 plot_absolute(simulationMAY)
 ```
