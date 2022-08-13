@@ -4,7 +4,7 @@
 \alias{count_def}
 \title{Particle counter strategy}
 \usage{
-count_def(prev, score, k, ...)
+count_def(prev, score, k, delta, ...)
 }
 \arguments{
 \item{prev}{Numeric: previous decision.}
@@ -12,6 +12,8 @@ count_def(prev, score, k, ...)
 \item{score}{Numeric: previous condition.}
 
 \item{k}{Numeric: the maximum system capacity for population}
+
+\item{delta}{Numeric: proportion of k to evaluate score. (score >= k * delta)}
 
 \item{...}{list: extra parameters passed from \code{game()} function}
 }

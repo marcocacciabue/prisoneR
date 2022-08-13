@@ -82,19 +82,21 @@ alwfunc <- function(...) {
 #' @param prev Numeric: previous decision.
 #' @param score Numeric: previous condition.
 #' @param k Numeric: the maximum system capacity for population
+#' @param delta Numeric: proportion of k to evaluate score. (score >= k * delta)
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
-count_def <- function(prev, score, k, ...) {
+count_def <- function(prev, score, k, delta, ...) {
   with(as.list(c(
     prev,
     score,
-    k
+    k,
+    delta
   )), {
     if (is.na(score)){
       return(1)
     }else{
-    if (score >= k * 0.5) {
+    if (score >= k * delta) {
       2
     } else {
       1

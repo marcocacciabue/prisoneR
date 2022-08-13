@@ -17,6 +17,8 @@ game(
   generations = NULL,
   k1 = NULL,
   k2 = NULL,
+  d1 = NULL,
+  d2 = NULL,
   parameters
 )
 }
@@ -39,9 +41,13 @@ game(
 
 \item{generations}{numeric: the number of rounds (generations) to simulate.}
 
-\item{k1}{numeric: the maximum system capacity for population 1. Only relevant for Lotka method (default=1).}
+\item{k1}{numeric: the maximum system capacity for population 1. Only relevant for Count_defective method (default=1).}
 
-\item{k2}{numeric: the maximum system capacity for population 2. Only relevant for Lotka method (default=1).}
+\item{k2}{numeric: the maximum system capacity for population 2. Only relevant for Count_defective method (default=1).}
+
+\item{d1}{numeric: proportion of k to evaluate score. Only relevant for Count_defective method (default=1).}
+
+\item{d2}{numeric: proportion of k to evaluate score. Only relevant for Count_defective method (default=1).}
 
 \item{parameters}{list: all the arguments ALL the necessary for \code{funGrowth}, \code{interaction}, \code{play1} and \code{play2} functions.}
 }

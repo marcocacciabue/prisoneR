@@ -19,8 +19,10 @@ library(ggplot2)
 #' @param input1 numeric: the initial condition of population 1 (defaults to 0.1).
 #' @param input2 numeric: the initial condition of population 2 (defaults to 0.1).
 #' @param generations numeric: the number of rounds (generations) to simulate.
-#' @param k1 numeric: the maximum system capacity for population 1. Only relevant for Lotka method (default=1).
-#' @param k2 numeric: the maximum system capacity for population 2. Only relevant for Lotka method (default=1).
+#' @param k1 numeric: the maximum system capacity for population 1. Only relevant for Count_defective method (default=1).
+#' @param k2 numeric: the maximum system capacity for population 2. Only relevant for Count_defective method (default=1).
+#' @param d1 numeric: proportion of k to evaluate score. Only relevant for Count_defective method (default=1).
+#' @param d2 numeric: proportion of k to evaluate score. Only relevant for Count_defective method (default=1).
 #' @param parameters list: all the arguments ALL the necessary for `funGrowth`, `interaction`, `play1` and `play2` functions.
 #'
 #' @returns A [data.frame()] with the obtained scores. The output has the following columns:
@@ -47,6 +49,8 @@ game <- function(type = c("May", "Lotka", "Custom"),
                  generations = NULL, # number of generations
                  k1 = NULL,
                  k2 = NULL,
+                 d1 = NULL,
+                 d2 = NULL,
                  parameters # list of parameters to pass to ode solver
 ) {
 
@@ -59,11 +63,41 @@ game <- function(type = c("May", "Lotka", "Custom"),
   # handle functions in case type = "Custom"
   if (type == "Custom") {
     if (missing(funGrowth) | is.null(funGrowth) | !is.function(funGrowth)) {
-      stop("'funGrowth' should be given as a function.You can try preloaded LV or MAY accordingly")
+      stop("'funGrowth' must be given as a function.You can try preloaded LV or MAY accordingly")
     }
     if (missing(interaction) | is.null(interaction) | !is.function(interaction)) {
-      stop("'interaction' should be given as a function.You can try preloaded interaction_dynamic_MAY or interaction_dynamic_LV accordingly")
+      stop("'interaction' must be given as a function.You can try preloaded interaction_dynamic_MAY or interaction_dynamic_LV accordingly")
     }
+
+    if (is.null(play1) | missing(play1) | !is.function(play1)) {
+      stop("'play1' must be given as a function.")
+    }
+
+    if (is.null(play2) | missing(play2) | !is.function(play2)) {
+      stop("'play2' must be given as a function.")
+    }
+
+  } else {
+
+    # check play1 parameter
+    if (is.null(play1) | missing(play1)) {
+      stop("'play1' must be set and must be one of the following: Alwaysfunctional, Alwaysdefectiveinterfering,
+                             Randommodification, Randomeffective,
+                             Randomdefectiveinterfering, Count_defective")
+    }
+    play1 <- match.arg(play1)
+
+    # check play2 parameter
+    if (is.null(play2) | missing(play2)) {
+      stop("'play2' must be set and must be one of the following: Alwaysfunctional, Alwaysdefectiveinterfering,
+                             Randommodification, Randomeffective,
+                             Randomdefectiveinterfering, Count_defective")
+    }
+    play2 <- match.arg(play2)
+
+    play1 <- check_strategy(play1)
+    play2 <- check_strategy(play2)
+
   }
 
 
@@ -79,24 +113,6 @@ game <- function(type = c("May", "Lotka", "Custom"),
     "Custom" = interaction
   )
 
-  # check play1 parameter
-  if (is.null(play1) | missing(play1)) {
-    stop("'play1' must be set and must be one of the following: Alwaysfunctional, Alwaysdefectiveinterfering,
-                             Randommodification, Randomeffective,
-                             Randomdefectiveinterfering, Count_defective")
-  }
-  play1 <- match.arg(play1)
-
-  # check play1 parameter
-  if (is.null(play2) | missing(play2)) {
-    stop("'play2' must be set and must be one of the following: Alwaysfunctional, Alwaysdefectiveinterfering,
-                             Randommodification, Randomeffective,
-                             Randomdefectiveinterfering, Count_defective")
-  }
-  play2 <- match.arg(play2)
-
-  play1 <- check_strategy(play1)
-  play2 <- check_strategy(play2)
 
   # check if parameters is a list
   if (!is.list(parameters) | is.null(parameters)) stop("'parameters' should be given as a list of values")
@@ -118,13 +134,22 @@ game <- function(type = c("May", "Lotka", "Custom"),
     stop("If 'parameters' is a list that contains k2, argument 'k2' should be NULL")
   }
 
+  if (!is.null(d1) & "d1" %in% names(parameters)) {
+    stop("If 'parameters' is a list that contains d1, argument 'd1' should be NULL")
+  }
+  if (!is.null(d2) & "d2" %in% names(parameters)) {
+    stop("If 'parameters' is a list that contains d2, argument 'd2' should be NULL")
+  }
+
 
   # define corresponding arguments given in parameters
   if (is.null(parameters$input1)) parameters$input1 <- input1
   if (is.null(parameters$input2)) parameters$input2 <- input2
   if (is.null(parameters$generations)) parameters$generations <- generations
-  if (is.null(k1)) parameters$k1 <- k1
-  if (is.null(k2)) parameters$k2 <- k2
+  if (is.null(parameters$k1)) parameters$k1 <- k1
+  if (is.null(parameters$k2)) parameters$k2 <- k2
+  if (is.null(parameters$d1)) parameters$d1 <- d1
+  if (is.null(parameters$d2)) parameters$d2 <- d2
 
   # Define general values in case no arguments are given.
   if (is.null(input1) & !("input1" %in% names(parameters))) parameters$input1 <- 0.1
@@ -132,7 +157,8 @@ game <- function(type = c("May", "Lotka", "Custom"),
   if (is.null(generations) & !("generations" %in% names(parameters))) parameters$generations <- 50
   if (is.null(k1) & !("k1" %in% names(parameters))) parameters$k1 <- 1
   if (is.null(k2) & !("k2" %in% names(parameters))) parameters$k2 <- 1
-
+  if (is.null(d1) & !("d1" %in% names(parameters))) parameters$d1 <- 1
+  if (is.null(d2) & !("d2" %in% names(parameters))) parameters$d2 <- 1
 
 
   # check if relevant integers are given
@@ -201,8 +227,8 @@ game <- function(type = c("May", "Lotka", "Custom"),
 
 
 
-    p1Move <- play1(prev = NULL, score = p1Score, k = k1)
-    p2Move <- play2(prev = NULL, score = p2Score, k = k2)
+    p1Move <- play1(prev = NULL, score = p1Score, k = k1, delta = d1, parameters)
+    p2Move <- play2(prev = NULL, score = p2Score, k = k2, delta = d2, parameters)
 
 
     # Genero los vectores que guardaran los valores de cada ciclo
@@ -235,8 +261,8 @@ game <- function(type = c("May", "Lotka", "Custom"),
       # Vuelvo a calcular los move para el siguiente ciclo
       prevP1Move <- p1Move
       prevP2Move <- p2Move
-      p1Move <- play1(prev = prevP1Move, score = p1Score, k = k1)
-      p2Move <- play2(prev = prevP2Move, score = p2Score, k = k2)
+      p1Move <- play1(prev = prevP1Move, score = p1Score, k = k1, delta = d1, parameters)
+      p2Move <- play2(prev = prevP2Move, score = p2Score, k = k2, delta = d2, parameters)
 
       # Guardo el valor del ciclo
       xn1 <- append(x = xn1, values = p1Score)
