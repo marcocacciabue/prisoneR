@@ -120,11 +120,11 @@ game <- function(type = c("May", "Lotka", "Custom"),
 
 
   # define corresponding arguments given in parameters
-  if (!is.null(parameters$input1)) parameters$input1 <- input1
-  if (!is.null(parameters$input2)) parameters$input2 <- input2
-  if (!is.null(generations)) parameters$generations <- generations
-  if (!is.null(k1)) parameters$k1 <- k1
-  if (!is.null(k2)) parameters$k2 <- k2
+  if (is.null(parameters$input1)) parameters$input1 <- input1
+  if (is.null(parameters$input2)) parameters$input2 <- input2
+  if (is.null(parameters$generations)) parameters$generations <- generations
+  if (is.null(k1)) parameters$k1 <- k1
+  if (is.null(k2)) parameters$k2 <- k2
 
   # Define general values in case no arguments are given.
   if (is.null(input1) & !("input1" %in% names(parameters))) parameters$input1 <- 0.1

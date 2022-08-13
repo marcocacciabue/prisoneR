@@ -59,6 +59,6 @@ plot_relative <- function(df) {
   x_time <- 1:generations
   p <- ggplot2::ggplot(df) +
     geom_line(aes(x = x_time, y = .data$Relative_fst)) +
-    labs(x = "Generations", y = "Absolute Fst")
+    labs(x = "Generations", y = "Relative Fst")
   return(p)
 }

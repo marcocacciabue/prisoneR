@@ -91,10 +91,14 @@ count_def <- function(prev, score, k, ...) {
     score,
     k
   )), {
+    if (is.na(score)){
+      return(1)
+    }else{
     if (score >= k * 0.5) {
       2
     } else {
       1
+    }
     }
   })
 }
