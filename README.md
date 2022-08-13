@@ -115,4 +115,8 @@ simulationMAY <- game(
 
 And then plot the results
 
+``` r
+plot_absolute(simulationMAY)
+```
+
 <img src="man/figures/README-may-1.png" width="100%" />
