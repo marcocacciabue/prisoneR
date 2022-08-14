@@ -20,3 +20,11 @@ A list with the modified parameters.
 Preloaded function that handles the possible interactions
 for a simulation
 }
+\examples{
+#' params <- prepare_parameters()
+#'
+#'
+#' interaction_dynamic_LV(p1Move=!,p2Move=2, parameters=params)
+#'
+#'
+}

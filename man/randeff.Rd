@@ -15,3 +15,7 @@ Numeric: 1 or 2 for cooperation or not.
 \description{
 Random Effective function
 }
+\examples{
+nextmove<-randeff()
+
+}

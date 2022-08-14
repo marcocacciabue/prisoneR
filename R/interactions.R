@@ -9,7 +9,8 @@
 #'
 #' @return A list with the modified parameters.
 #'
-#'
+#' @export
+#' @example inst/examples/interaction_dynamic_MAY.R
 interaction_dynamic_MAY <- function(p1Move,
                                     p2Move,
                                     parameters) {
@@ -69,7 +70,8 @@ interaction_dynamic_MAY <- function(p1Move,
 #' @param parameters A list of parameters passed from the `game()` function
 #'
 #' @return A list with the modified parameters.
-#'
+#' @export
+#' @example inst/examples/interaction_dynamic_LV.R
 
 interaction_dynamic_LV <- function(p1Move,
                                    p2Move,

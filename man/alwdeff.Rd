@@ -15,3 +15,7 @@ Numeric: 2 for NO cooperation
 \description{
 Always defective strategy
 }
+\examples{
+nextmove<-alwdeff()
+
+}

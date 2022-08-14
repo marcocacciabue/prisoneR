@@ -15,3 +15,7 @@ Numeric: 1 for cooperation
 \description{
 Always functional strategy
 }
+\examples{
+nextmove<-alwfunc()
+nextmove
+}

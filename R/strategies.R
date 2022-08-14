@@ -7,6 +7,10 @@
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
 #'
+#' @export
+#' @examples
+#' nextmove<-randeff()
+#'
 randeff <- function(...) {
   val <- sample(1:5, 1)
   if (val > 3) {
@@ -28,6 +32,9 @@ randeff <- function(...) {
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
+#' @export
+#' @examples
+#' nextmove<-randdeff()
 #'
 randdeff <- function(...) {
   (tirada <- randeff())
@@ -46,6 +53,9 @@ randdeff <- function(...) {
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
+#' @export
+#' @examples
+#' nextmove<-randbasic()
 #'
 randbasic <- function(...) {
   sample(1:2, 1)
@@ -58,6 +68,9 @@ randbasic <- function(...) {
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 2 for NO cooperation
+#' @export
+#' @examples
+#' nextmove<-alwdeff()
 #'
 alwdeff <- function(...) {
   2
@@ -69,7 +82,10 @@ alwdeff <- function(...) {
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 1 for cooperation
-#'
+#' @export
+#' @examples
+#' nextmove<-alwfunc()
+#' nextmove
 alwfunc <- function(...) {
   1
 }
@@ -86,6 +102,10 @@ alwfunc <- function(...) {
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
+#' @export
+#' @examples
+#' nextmove<-count_def(prev=1,score=0.5,k=1,delta=0.5)
+#' nextmove
 count_def <- function(prev, score, k, delta, ...) {
   with(as.list(c(
     prev,

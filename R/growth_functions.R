@@ -7,6 +7,9 @@
 #' @param parameters list: parameters passed from the `game()` function
 #'
 #' @return numeric: the next generation values
+#' @export
+#'
+#' @example inst/examples/LV.R
 #'
 LV <- function(p1Score, p2Score, parameters) {
   LotkaVolt <- function(t, state, parameters) {
@@ -41,6 +44,8 @@ LV <- function(p1Score, p2Score, parameters) {
 #'
 #' @return Two numerics with the next generation value
 #'
+#' @example inst/examples/MAY.R
+
 MAY <- function(p1Score, p2Score, parameters) {
   with(as.list(c(p1Score, p2Score, parameters)), {
     p1Score_new <- (r1 * p1Score * (H1 - (p1Score * (genome1**mutation1))))

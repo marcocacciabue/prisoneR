@@ -23,3 +23,7 @@ Numeric: 1 or 2 for cooperation or not.
 \description{
 Particle counter strategy
 }
+\examples{
+nextmove<-count_def(prev=1,score=0.5,k=1,delta=0.5)
+nextmove
+}
