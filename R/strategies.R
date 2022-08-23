@@ -95,28 +95,37 @@ alwfunc <- function(...) {
 
 #' Particle counter strategy
 #'
-#' @param prev Numeric: previous decision.
-#' @param score Numeric: previous condition.
-#' @param k Numeric: the maximum system capacity for population
-#' @param delta Numeric: proportion of k to evaluate score. (score >= k * delta)
+#'
+#' @param prev logical: previous population move
+#' @param Score Numeric: previous condition
+#' @param k Numeric: system capacity
+#' @param delta Numeric: factor
 #' @param ... list: extra parameters passed from `game()` function
 #'
 #' @return Numeric: 1 or 2 for cooperation or not.
 #' @export
 #' @examples
-#' nextmove<-count_def(prev=1,score=0.5,k=1,delta=0.5)
+#' nextmove<-count_def(prev=1,
+#' Score=0.5,
+#' k=1,
+#' delta=0.3,
+#' )
 #' nextmove
-count_def <- function(prev, score, k, delta, ...) {
+count_def <- function(prev,
+                      Score,
+                      k,
+                      delta,
+                      ...) {
   with(as.list(c(
     prev,
-    score,
+    Score,
     k,
     delta
   )), {
-    if (is.na(score)){
+    if (is.na(Score)){
       return(1)
     }else{
-    if (score >= k * delta) {
+    if (Score <= k * delta) {
       2
     } else {
       1

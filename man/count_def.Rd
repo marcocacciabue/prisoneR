@@ -4,16 +4,16 @@
 \alias{count_def}
 \title{Particle counter strategy}
 \usage{
-count_def(prev, score, k, delta, ...)
+count_def(prev, Score, k, delta, ...)
 }
 \arguments{
-\item{prev}{Numeric: previous decision.}
+\item{prev}{logical: previous population move}
 
-\item{score}{Numeric: previous condition.}
+\item{Score}{Numeric: previous condition}
 
-\item{k}{Numeric: the maximum system capacity for population}
+\item{k}{Numeric: system capacity}
 
-\item{delta}{Numeric: proportion of k to evaluate score. (score >= k * delta)}
+\item{delta}{Numeric: factor}
 
 \item{...}{list: extra parameters passed from \code{game()} function}
 }
@@ -24,6 +24,10 @@ Numeric: 1 or 2 for cooperation or not.
 Particle counter strategy
 }
 \examples{
-nextmove<-count_def(prev=1,score=0.5,k=1,delta=0.5)
+nextmove<-count_def(prev=1,
+Score=0.5,
+k=1,
+delta=0.3,
+)
 nextmove
 }

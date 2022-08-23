@@ -227,8 +227,16 @@ game <- function(type = c("May", "Lotka", "Custom"),
 
 
 
-    p1Move <- play1(prev = NULL, score = p1Score, k = k1, delta = d1, parameters)
-    p2Move <- play2(prev = NULL, score = p2Score, k = k2, delta = d2, parameters)
+    p1Move <- play1(prev = NULL,
+                    Score = p1Score,
+                    k = k1,
+                    delta = d1,
+                    parameters)
+    p2Move <- play2(prev = NULL,
+                    Score = p2Score,
+                    k = k2,
+                    delta = d2,
+                    parameters)
 
 
     # Genero los vectores que guardaran los valores de cada ciclo
@@ -237,7 +245,8 @@ game <- function(type = c("May", "Lotka", "Custom"),
     Relative_fst <- p3Score
     Absolute_fst <- p4Score
     Total_fst <- p5Score
-
+    Move1 <- p1Move
+    Move2 <- p2Move
 
     ## Se define el número de veces que se repiten las interacciones##
     for (i in 1:generations) {
@@ -261,8 +270,20 @@ game <- function(type = c("May", "Lotka", "Custom"),
       # Vuelvo a calcular los move para el siguiente ciclo
       prevP1Move <- p1Move
       prevP2Move <- p2Move
-      p1Move <- play1(prev = prevP1Move, score = p1Score, k = k1, delta = d1, parameters)
-      p2Move <- play2(prev = prevP2Move, score = p2Score, k = k2, delta = d2, parameters)
+
+
+      p1Move <- play1(prev = prevP1Move,
+                      Score = p1Score,
+                      k = k1,
+                      delta = d1,
+                      parameters)
+      p2Move <- play2(prev = prevP2Move,
+                      Score = p2Score,
+                      k = k2,
+                      delta = d2,
+                      parameters)
+      # p1Move <- play1(prev = prevP1Move, score = p1Score, k = k1, delta = d1, parameters)
+      # p2Move <- play2(prev = prevP2Move, score = p2Score, k = k2, delta = d2, parameters)
 
       # Guardo el valor del ciclo
       xn1 <- append(x = xn1, values = p1Score)
@@ -270,6 +291,8 @@ game <- function(type = c("May", "Lotka", "Custom"),
       Relative_fst <- append(x = Relative_fst, values = p3Score)
       Absolute_fst <- append(x = Absolute_fst, values = p4Score)
       Total_fst <- append(x = Total_fst, values = p5Score)
+      Move1 <- append(x = Move1, values = p1Move)
+      Move2 <- append(x = Move2, values = p2Move)
     }
     # La funcion devuelve los vectores de todos los ciclos
     return(data.frame(
@@ -277,7 +300,9 @@ game <- function(type = c("May", "Lotka", "Custom"),
       xn2 = xn2,
       Relative_fst = Relative_fst,
       Absolute_fst = Absolute_fst,
-      Total_fst = Total_fst
+      Total_fst = Total_fst,
+      Move1 = Move1,
+      Move2 = Move2
     ))
   })
 }
