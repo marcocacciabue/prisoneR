@@ -170,7 +170,7 @@ game <- function(type = c("May", "Lotka", "Custom"),
     stop("'input2' should be given as an numeric")
   }
 
-  if ((!parameters$generations == round(parameters$generations)) | (parameters$generations > 1000) | (parameters$generations < 2)) {
+  if ((!parameters$generations == round(parameters$generations)) | (parameters$generations > 10000) | (parameters$generations < 2)) {
     stop("'generations' should be given as an interger of values between 2 and 1000")
   }
 
