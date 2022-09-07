@@ -43,7 +43,7 @@ LV <- function(p1Score, p2Score, parameters) {
 #' @param parameters list: parameters passed from the `game()` function
 #'
 #' @return Two numerics with the next generation value
-#'
+#' @export
 #' @example inst/examples/MAY.R
 
 MAY <- function(p1Score, p2Score, parameters) {

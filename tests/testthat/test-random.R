@@ -19,6 +19,9 @@ test_that("results are reproducible by using the seed", {
   expect_true(simulationLV_1[10, 1] == simulationLV_2[10, 1])
 })
 
+
+params <- prepare_parameters_may()
+
 set.seed(1)
 simulationMay_1 <- game(
   type = "May",
