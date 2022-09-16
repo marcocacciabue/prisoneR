@@ -36,12 +36,14 @@ game <- function(type = c("May", "Lotka", "Custom"),
                  play1 = c(
                    "Alwaysfunctional", "Alwaysdefectiveinterfering",
                    "Randommodification", "Randomeffective",
-                   "Randomdefectiveinterfering", "Count_defective"
+                   "Randomdefectiveinterfering", "Count_defective",
+                   "Count_defective_invert"
                  ), # strategy of player 1
                  play2 = c(
                    "Alwaysfunctional", "Alwaysdefectiveinterfering",
                    "Randommodification", "Randomeffective",
-                   "Randomdefectiveinterfering", "Count_defective"
+                   "Randomdefectiveinterfering", "Count_defective",
+                   "Count_defective_invert"
                  ), # strategy of player 2
                  interaction, # interaction function
                  input1 = NULL, # initial condition for player 1
@@ -83,7 +85,7 @@ game <- function(type = c("May", "Lotka", "Custom"),
     if (is.null(play1) | missing(play1)) {
       stop("'play1' must be set and must be one of the following: Alwaysfunctional, Alwaysdefectiveinterfering,
                              Randommodification, Randomeffective,
-                             Randomdefectiveinterfering, Count_defective")
+                             Randomdefectiveinterfering, Count_defective, Count_defective_invert")
     }
     play1 <- match.arg(play1)
 
@@ -91,7 +93,7 @@ game <- function(type = c("May", "Lotka", "Custom"),
     if (is.null(play2) | missing(play2)) {
       stop("'play2' must be set and must be one of the following: Alwaysfunctional, Alwaysdefectiveinterfering,
                              Randommodification, Randomeffective,
-                             Randomdefectiveinterfering, Count_defective")
+                             Randomdefectiveinterfering, Count_defective, Count_defective_invert")
     }
     play2 <- match.arg(play2)
 

@@ -34,7 +34,9 @@ prepare_parameters <- function() {
     r1_2_2 = 0.8,
     r2_2_2 = -0.8,
     a12_2_2 = -0.1,
-    a21_2_2 = -0.1
+    a21_2_2 = -0.1,
+    d1=0.5,
+    d2=0.2
   )
   return(params)
 }

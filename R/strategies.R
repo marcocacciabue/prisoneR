@@ -135,6 +135,47 @@ count_def <- function(prev,
 }
 
 
+#' Particle counter strategy inverted
+#'
+#'
+#' @param prev logical: previous population move
+#' @param Score Numeric: previous condition
+#' @param k Numeric: system capacity
+#' @param delta Numeric: factor
+#' @param ... list: extra parameters passed from `game()` function
+#'
+#' @return Numeric: 1 or 2 for cooperation or not.
+#' @export
+#' @examples
+#' nextmove<-count_def_invert(prev=1,
+#' Score=0.5,
+#' k=1,
+#' delta=0.3,
+#' )
+#' nextmove
+count_def_invert <- function(prev,
+                      Score,
+                      k,
+                      delta,
+                      ...) {
+  with(as.list(c(
+    prev,
+    Score,
+    k,
+    delta
+  )), {
+    if (is.na(Score)){
+      return(1)
+    }else{
+      if (Score <= k * delta) {
+        1
+      } else {
+        2
+      }
+    }
+  })
+}
+
 #' Check strategy
 #'
 #' @param strategy String: must be one of the following:
@@ -163,6 +204,10 @@ check_strategy <- function(strategy = "Alwaysfunctional") {
 
   if (strategy == "Count_defective") {
     play <- count_def
+  }
+
+  if (strategy == "Count_defective_invert") {
+    play <- count_def_invert
   }
   return(play)
 }
